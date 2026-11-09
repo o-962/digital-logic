@@ -1,0 +1,122 @@
+/* Fonts ship with the site, so it looks the same on any computer and works offline.
+   Inter: text. KaTeX (Computer Modern, the LaTeX font): math. JetBrains Mono: code and typed input. */
+@font-face{font-family:"Inter";font-style:normal;font-weight:100 900;font-display:swap;src:url(fonts/inter-latin-wght-normal.woff2) format("woff2")}
+@font-face{font-family:"JetBrains Mono";font-style:normal;font-weight:400;font-display:swap;src:url(fonts/jetbrains-mono-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:"JetBrains Mono";font-style:normal;font-weight:700;font-display:swap;src:url(fonts/jetbrains-mono-latin-700-normal.woff2) format("woff2")}
+:root{
+  --bg:#10151c; --panel:#1a212b; --panel2:#232c38; --code:#0c1117; --line:#3a4656; --text:#f1f5f9; --muted:#bcc7d3;
+  --accent:#5eead4; --accent2:#fbbf6b; --good:#6ee79a; --bad:#ff8a8a; --warn:#fde047; --blue:#7cc4fa; --pink:#f58ac0;
+  /* KaTeX_Main comes second to supply symbols Inter's Latin subset lacks, such as arrows */
+  --sans:"Inter","KaTeX_Main",sans-serif;
+  --mono:"JetBrains Mono","KaTeX_Main",monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:18px/1.75 var(--sans)}
+button,input,select{font-family:var(--sans)}
+a{color:var(--accent)}
+p{margin:.9em 0}
+li{margin:.45em 0}
+
+/* Math */
+.katex{font-size:1.2em}
+.katex-display{margin:0;text-align:left}
+.katex-display>.katex{text-align:left;font-size:1.3em}
+.katex-display>.katex>.katex-html{text-align:left}
+.nb{white-space:nowrap}
+
+code,.mono{font-family:var(--mono);font-size:.95em}
+code{background:var(--code);border:1px solid var(--line);border-radius:6px;padding:2px 7px}
+
+/* Top bar */
+header.top{position:sticky;top:0;z-index:50;background:rgba(16,21,28,.97);border-bottom:1px solid var(--line)}
+.topin{max-width:1280px;margin:auto;display:flex;align-items:center;gap:8px 18px;padding:10px 20px;flex-wrap:wrap}
+.brand{font-weight:700;font-size:17px;color:var(--text);text-decoration:none;font-family:var(--mono)}
+.brand b{color:var(--accent)}
+nav.links{display:flex;gap:4px;flex-wrap:wrap}
+nav.links a{color:var(--muted);text-decoration:none;padding:5px 11px;border-radius:8px;font-size:15px;line-height:1.5}
+nav.links a:hover{background:var(--panel2);color:var(--text)}
+nav.links a.on{background:var(--accent);color:#06241f;font-weight:700}
+
+/* Page */
+main{max-width:1040px;margin:auto;padding:36px 22px 90px}
+h1{font-size:2.5rem;line-height:1.2;margin:.3em 0 .4em;letter-spacing:-.01em}
+h2{font-size:1.75rem;line-height:1.3;margin-top:2.4em;margin-bottom:.8em;border-bottom:2px solid var(--line);padding-bottom:10px;color:var(--accent)}
+h3{font-size:1.3rem;color:var(--accent2);margin-top:1.8em;margin-bottom:.6em}
+.lead{color:var(--muted);font-size:1.2rem;line-height:1.7}
+.hi{color:var(--accent2);font-weight:700}
+.g{color:var(--good)} .r{color:var(--bad)} .b{color:var(--blue)} .p{color:var(--pink)}
+sub{font-size:.75em}
+
+/* Boxes */
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px 26px;margin:20px 0}
+.grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(290px,1fr))}
+.tile{display:block;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px;text-decoration:none;color:var(--text);transition:.15s}
+.tile:hover{border-color:var(--accent);transform:translateY(-2px)}
+.tile .n{font-family:var(--mono);color:var(--accent2);font-size:14px;font-weight:700}
+.tile h3{margin:.3em 0 .4em;color:var(--text);font-size:1.3rem}
+.tile p{margin:0;color:var(--muted);font-size:16px;line-height:1.6}
+.rule,.trap,.tip{padding:16px 20px;border-radius:0 12px 12px 0;margin:18px 0}
+.rule{border-left:5px solid var(--accent);background:var(--panel2)}
+.trap{border-left:5px solid var(--bad);background:#33191d}
+.tip{border-left:5px solid var(--good);background:#15301f}
+.trap::before,.tip::before{display:block;font-weight:800;font-size:14px;letter-spacing:.06em;margin-bottom:4px}
+.trap::before{content:"EXAM TRAP";color:var(--bad)}
+.tip::before{content:"TIP";color:var(--good)}
+.formula{background:var(--code);border:1px dashed var(--accent);padding:20px 24px;border-radius:12px;overflow-x:auto;margin:18px 0}
+
+/* Tables */
+table{border-collapse:collapse;margin:14px 0;font-size:17px;line-height:1.5}
+th,td{border:1px solid var(--line);padding:9px 15px;text-align:center}
+th{background:var(--panel2);color:var(--accent2);font-weight:700}
+tr:nth-child(even) td{background:rgba(255,255,255,.03)}
+.tw{overflow-x:auto}
+
+/* Worked examples */
+.steps{white-space:pre;background:var(--code);border:1px solid var(--line);border-radius:12px;padding:18px 22px;overflow-x:auto;margin:16px 0}
+.steps .sl{min-height:2em;line-height:2em;white-space:pre-wrap}
+.steps .gl{position:relative;height:2em;line-height:2em}
+.steps .gch{display:inline-block;text-align:center;font-family:"KaTeX_Main",serif;font-size:1.2em;line-height:1.667em}
+.steps .grun{white-space:pre}
+.steps .gl.gr{height:.6em}
+.steps .grule{height:0;top:.3em;border-top:1.5px solid currentColor}
+
+/* Small parts */
+.pill{display:inline-block;font-size:14px;line-height:1.5;padding:3px 12px;border-radius:99px;background:var(--panel2);border:1px solid var(--line);color:var(--muted);margin:0 6px 4px 0}
+.btn{display:inline-block;cursor:pointer;background:var(--accent);color:#06241f;border:0;border-radius:10px;padding:12px 22px;font-weight:700;font-size:17px;line-height:1.4;text-decoration:none}
+.btn.alt{background:var(--panel2);color:var(--text);border:1px solid var(--line)}
+.btn.warn{background:var(--accent2);color:#2b1a02}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+input[type=text],select{background:var(--code);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-family:var(--mono);font-size:17px}
+footer{color:var(--muted);text-align:center;font-size:15px;padding:30px}
+.pager{display:flex;justify-content:space-between;margin-top:50px;gap:12px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:20px;align-items:start}
+.two>*{min-width:0}
+.toc{columns:2}
+details{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin:12px 0}
+details summary{cursor:pointer;font-weight:600}
+details[open] summary{color:var(--accent)}
+
+@media(max-width:640px){
+  body{font-size:17px}
+  main{padding:24px 14px 70px}
+  h1{font-size:2rem}
+  h2{font-size:1.45rem}
+  .card{padding:16px}
+  .steps{padding:14px}
+  table{display:block;overflow-x:auto;max-width:100%}
+  .cs{columns:1!important}
+  svg{max-width:100%}
+}
+@media print{
+  body{font-size:12.5px;line-height:1.5}
+  header.top,.pager,.noprint,footer{display:none}
+  main{max-width:none;padding:0}
+  body{background:#fff;color:#000}
+  h1,h2,h3{color:#000}
+  .card,.rule,.trap,.tip,.formula,.steps,th,details{background:#fff;border-color:#888;color:#000}
+  tr:nth-child(even) td{background:#fff}
+  th,td{border-color:#888;color:#000}
+  .lead,.tile p,.pill{color:#000}
+  .trap::before,.tip::before,.hi,.g,.r{color:#000}
+}

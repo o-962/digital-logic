@@ -1,0 +1,119 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>6 · Binary Codes</title><link rel="stylesheet" href="assets/katex/katex.min.css"><link rel="stylesheet" href="assets/style.css"></head><body>
+<main>
+<p class="pill">Slides 41–42, 54–59 · Book 1.22–1.34 · HW 1-24, 1-29 · Exam 2017 Q6</p>
+<h1>6 · Binary Codes</h1>
+<p class="lead">A <b>code</b> assigns a unique bit pattern (a code word) to each element of information. Numeric codes should make arithmetic easy. Non-numeric codes such as ASCII don't need to.</p>
+
+<h2>How many bits do I need?</h2>
+<div class="formula" data-tex="n\text{ bits}\rightarrow\text{up to }M=2^{n}\text{ code words}\qquad\text{To encode }M\text{ elements: }n\ge\lceil\log_{2}M\rceil"></div>
+<div class="tw"><table><tr><th>M elements</th><th>Bits</th><th>Why</th></tr>
+<tr><td>10 decimal digits</td><td>4</td><td>log₂10 = 3.32 → 4 (2³=8 &lt; 10 ≤ 16)</td></tr>
+<tr><td>26 letters</td><td>5</td><td>16 &lt; 26 ≤ 32</td></tr>
+<tr><td>52 playing cards (Book 1.27)</td><td>6</td><td>32 &lt; 52 ≤ 64</td></tr>
+<tr><td>64 items</td><td>6</td><td>exactly 2⁶, so no extra bit is needed</td></tr>
+<tr><td>65 items</td><td>7</td><td>one more than 64 needs a whole extra bit</td></tr>
+<tr><td>1000 items</td><td>10</td><td>512 &lt; 1000 ≤ 1024</td></tr>
+</table></div>
+<div class="trap">If M is exactly a power of two, n = log₂M (64 → 6, not 7). The same idea answers memory questions: a 128K-word memory needs log₂(2¹⁷) = 17 address lines (2018 Final Q24).</div>
+
+<h2>BCD (Binary Coded Decimal, 8421)</h2>
+<div class="rule">Each decimal <b>digit</b> becomes its own 4-bit binary code. 0000–1001 (0–9) are <b>valid</b>. 1010–1111 (10–15) are <b>invalid</b> in BCD.</div>
+<div class="steps">351  → 0011 0101 0001
+6027 → 0110 0000 0010 0111          (HW 1-24)
+6514 → 0110 0101 0001 0100          (Book 1.22)
+BCD ≠ binary:  (351)10 = (1 0101 1111)2 in binary (9 bits) but 12 bits in BCD</div>
+<div class="trap">BCD uses more bits than binary, but it's easy to convert to and from decimal. Don't convert the whole number to binary when the question says BCD.</div>
+
+<h3>BCD addition</h3>
+<div class="rule">Add each digit in binary. If a digit sum is <b>&gt; 9</b> (1010–1111) <b>or</b> produces a carry out of 4 bits (≥ 16), <b>add 6 (0110)</b> to that digit. The carry goes to the next digit.</div>
+<div class="steps">  5 + 5:  0101 + 0101 = 1010 (&gt;9)  → + 0110 = 1 0000 → 0001 0000 = 10 ✓
+  8 + 9:  1000 + 1001 = 1 0001 (carry!) → + 0110 = 1 0111 → 0001 0111 = 17 ✓
+
+2017 Exam Q6:  (1000.0111)BCD + (0111.0110)BCD = 8.7 + 7.6
+  tenths: 0111 + 0110 = 1101 (&gt;9) → +0110 = 1 0011 → digit 3, carry 1
+  units : 1000 + 0111 + 1 = 1 0000 (carry out) → +0110 = 1 0110 → digit 6, carry 1
+  result: 0001 0110 . 0011 = 16.3  → answer (d) ✓
+
+Book 1.23:  791 + 658
+    0111 1001 0001
+  + 0110 0101 1000
+  units 0001+1000 = 1001 (9 ok)
+  tens  1001+0101 = 1110 → +0110 → 1 0100  (4, carry 1)
+  hund. 0111+0110+1 = 1110 → +0110 → 1 0100 (4, carry 1)
+  = 0001 0100 0100 1001 = 1449 ✓</div>
+
+<h2>Other decimal codes (Book 1.24–1.26, 1.33)</h2>
+<div class="tw"><table>
+<tr><th>Digit</th><th>BCD 8421</th><th>2421</th><th>Excess-3</th><th>84-2-1</th><th>6311</th></tr>
+<tr><td>0</td><td>0000</td><td>0000</td><td>0011</td><td>0000</td><td>0000</td></tr>
+<tr><td>1</td><td>0001</td><td>0001</td><td>0100</td><td>0111</td><td>0001</td></tr>
+<tr><td>2</td><td>0010</td><td>0010</td><td>0101</td><td>0110</td><td>0011</td></tr>
+<tr><td>3</td><td>0011</td><td>0011</td><td>0110</td><td>0101</td><td>0100</td></tr>
+<tr><td>4</td><td>0100</td><td>0100</td><td>0111</td><td>0100</td><td>0101</td></tr>
+<tr><td>5</td><td>0101</td><td>1011</td><td>1000</td><td>1011</td><td>0111</td></tr>
+<tr><td>6</td><td>0110</td><td>1100</td><td>1001</td><td>1010</td><td>1000</td></tr>
+<tr><td>7</td><td>0111</td><td>1101</td><td>1010</td><td>1001</td><td>1001</td></tr>
+<tr><td>8</td><td>1000</td><td>1110</td><td>1011</td><td>1000</td><td>1011</td></tr>
+<tr><td>9</td><td>1001</td><td>1111</td><td>1100</td><td>1111</td><td>1100</td></tr>
+</table></div>
+<ul>
+<li><b>Weighted codes</b> (8421, 2421, 84-2-1, 6311): digit = Σ bit × weight. For example 84-2-1: 0111 = 0·8 + 4 − 2 − 1 = 1.</li>
+<li><b>Excess-3</b> = BCD + 3 (0011). It is <b>not weighted</b>.</li>
+<li><b>Self-complementing</b> codes (2421, Excess-3, 84-2-1): the 9's complement of a digit is the 1's complement of its code. Book 1.26: 6248 in 2421 = 1100 0010 0100 1110. Its 1's complement is 0011 1101 1011 0001 = 3751 in 2421, and 3751 is the 9's complement of 6248 ✓.</li>
+<li>Book 1.25: 6248 → BCD 0110 0010 0100 1000 · Excess-3 1001 0101 0111 1011 · 2421 1100 0010 0100 1110 · 6311 1000 0011 0101 1011.</li>
+<li>Book 1.33: the register 1000 1001 0111 reads as <b>897</b> in BCD, <b>564</b> in Excess-3, <b>871</b> in 84-2-1, and <b>2199</b> as plain binary.</li>
+</ul>
+<div class="trap">Some weighted codes allow more than one code word per digit. In 2421, 5 could be 0101 or 1011. The <b>standard</b> table above uses the self-complementing choice. For 6311 the book also has a choice; this table uses 5 = 0111 and 8 = 1011.</div>
+
+<h2>Gray code</h2>
+<div class="rule">Consecutive values differ in <b>exactly one bit</b>, including the wrap-around from 15 to 0. It is <b>not</b> weighted and isn't used for arithmetic. It's used for shaft encoders and anywhere a multi-bit change could cause a glitch.</div>
+<div class="two"><div class="tw"><table><tr><th>Dec</th><th>Binary</th><th>Gray</th><th>Dec</th><th>Binary</th><th>Gray</th></tr>
+<tr><td>0</td><td>0000</td><td>0000</td><td>8</td><td>1000</td><td>1100</td></tr>
+<tr><td>1</td><td>0001</td><td>0001</td><td>9</td><td>1001</td><td>1101</td></tr>
+<tr><td>2</td><td>0010</td><td>0011</td><td>10</td><td>1010</td><td>1111</td></tr>
+<tr><td>3</td><td>0011</td><td>0010</td><td>11</td><td>1011</td><td>1110</td></tr>
+<tr><td>4</td><td>0100</td><td>0110</td><td>12</td><td>1100</td><td>1010</td></tr>
+<tr><td>5</td><td>0101</td><td>0111</td><td>13</td><td>1101</td><td>1011</td></tr>
+<tr><td>6</td><td>0110</td><td>0101</td><td>14</td><td>1110</td><td>1001</td></tr>
+<tr><td>7</td><td>0111</td><td>0100</td><td>15</td><td>1111</td><td>1000</td></tr></table></div>
+<div class="steps">Binary → Gray:
+  g(MSB) = b(MSB)
+  g(i)   = b(i+1) XOR b(i)
+  e.g. 1011 → 1, 1⊕0=1, 0⊕1=1, 1⊕1=0 → 1110
+
+Gray → Binary:
+  b(MSB) = g(MSB)
+  b(i)   = b(i+1) XOR g(i)   (running XOR)
+  e.g. 1101 → 1, 1⊕1=0, 0⊕0=0, 0⊕1=1 → 1001 = 9</div></div>
+<div class="tip">You can also build the table by reflecting: write the 1-bit list 0, 1. Mirror it to get 0, 1, 1, 0 and prefix the first half with 0 and the second half with 1: 00, 01, 11, 10. Repeat for more bits.</div>
+
+<h2>ASCII</h2>
+<div class="rule">ASCII is a <b>7-bit</b> code with 128 characters: 94 printable graphic characters, the space, and 33 control characters (0–31 and DEL 127). The 8th bit (MSB) is often used for <b>parity</b>.</div>
+<div class="tw"><table><tr><th>Char</th><th>Hex</th><th>7-bit</th><th>Char</th><th>Hex</th><th>7-bit</th></tr>
+<tr><td>'0'</td><td>30</td><td>011 0000</td><td>space</td><td>20</td><td>010 0000</td></tr>
+<tr><td>'9'</td><td>39</td><td>011 1001</td><td>'@'</td><td>40</td><td>100 0000</td></tr>
+<tr><td>'A'</td><td>41</td><td>100 0001</td><td>'a'</td><td>61</td><td>110 0001</td></tr>
+<tr><td>'Z'</td><td>5A</td><td>101 1010</td><td>'z'</td><td>7A</td><td>111 1010</td></tr>
+<tr><td>'?'</td><td>3F</td><td>011 1111</td><td>'+'</td><td>2B</td><td>010 1011</td></tr>
+<tr><td>'.'</td><td>2E</td><td>010 1110</td><td>DEL</td><td>7F</td><td>111 1111</td></tr></table></div>
+<ul>
+<li>Digit character = 011 + BCD of the digit, so '7' = 011 0111 (hex 30 + digit).</li>
+<li>Upper ↔ lower case: only the <b>bit with weight 32 (2⁵, the 6th bit from the right)</b> changes. 'A' = 100 0001, 'a' = 110 0001 (Book 1.32).</li>
+<li>Letter position: 'A' = 65, so the n-th letter is 64 + n (uppercase) or 96 + n (lowercase).</li>
+<li>Book 1.31: there are 95 printable characters if you count the space, 94 without it. Of the 94 graphic ones, 94 − 26 − 26 − 10 = <b>32</b> are special characters.</li>
+</ul>
+
+<h2>Parity (error detection)</h2>
+<div class="rule">Add one bit so the <b>total number of 1s, including the parity bit</b>, is <b>even</b> (even parity) or <b>odd</b> (odd parity).</div>
+<div class="steps">              data       even P   odd P
+ 4-bit         0111       1 0111   0 0111
+ 7-bit      1000001       0 1000001  1 1000001   ('A' has two 1s)</div>
+<div class="rule">Parity detects any <b>odd</b> number of flipped bits (1, 3, …). It <b>can't detect</b> an even number of errors and <b>can't correct</b> anything, because it doesn't say which bit is wrong.</div>
+<div class="steps">Decoding ASCII with a parity MSB: strip the MSB, read the 7 bits, then count the 1s.
+ HW 1-29:  4A EF 68 6E 20 C4 EF E5  → "John Doe"  every byte has an odd count of 1s → ODD parity
+ Book 1.30: 73 F4 E5 76 E5 4A EF 62 73 → "steveJobs"  → ODD parity
+ Slide HW: 11000011 01101111 … 11010100 → "Comp@PSUT"  → EVEN parity
+ Book 1.29: 1010011 1110100 … → "Steve Jobs"</div>
+</main>
+<script src="assets/katex/katex.min.js"></script><script src="assets/math.js"></script><script src="assets/layout.js"></script></body></html>

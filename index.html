@@ -1,0 +1,48 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Chapter 1 · Binary Systems · Study Hub</title><link rel="stylesheet" href="assets/katex/katex.min.css"><link rel="stylesheet" href="assets/style.css"></head><body>
+<main>
+<p class="pill">4241 Digital Logic Design</p><p class="pill">Mano · Chapter 1</p>
+<h1>Chapter 1: Binary Systems <span class="hi">Master Hub</span></h1>
+<p class="lead">Everything from the 69 lecture slides, the book problems 1.1 to 1.36, and the binary-systems part of your past papers, squeezed into short review pages. At the end there's a quiz that will tell you whether you actually know this chapter.</p>
+
+<div class="card">
+<b>How to use this site</b>
+<ol>
+<li>Read pages <b>1 → 7</b> once. Each one is short and only has rules, worked examples and traps.</li>
+<li>Print the <a href="cheatsheet.html">Cheat Sheet</a> and keep it next to you.</li>
+<li>Read <a href="solved.html">Solved Problems</a>: every slide example, homework and book problem with its answer.</li>
+<li>Take the <a href="quiz.html">Mastery Quiz</a>: 137 questions scored 0–100, each with a full step-by-step solution. Retake it until you hit 90+.</li>
+</ol>
+</div>
+
+<h2>Chapter map</h2>
+<div class="grid">
+<a class="tile" href="number-systems.html"><span class="n">PAGE 1</span><h3>Number Systems</h3><p>Base/radix, positional weights, decimal/binary/octal/hex, powers of 2, finding an unknown base.</p></a>
+<a class="tile" href="conversions.html"><span class="n">PAGE 2</span><h3>Base Conversions</h3><p>Any base → decimal, decimal → any base (integer and fraction), grouping shortcuts for 2↔8↔16 and 3↔9.</p></a>
+<a class="tile" href="arithmetic.html"><span class="n">PAGE 3</span><h3>Arithmetic</h3><p>Addition, subtraction (borrow a base), multiplication and division in binary, octal, hex and any base r.</p></a>
+<a class="tile" href="complements.html"><span class="n">PAGE 4</span><h3>Complements</h3><p>1's and 2's, 9's and 10's, (r−1)'s and r's complement. Subtraction using complements.</p></a>
+<a class="tile" href="signed.html"><span class="n">PAGE 5</span><h3>Signed Numbers</h3><p>Signed magnitude, signed 1's and signed 2's complement, ranges, overflow, sign extension.</p></a>
+<a class="tile" href="codes.html"><span class="n">PAGE 6</span><h3>Binary Codes</h3><p>BCD and BCD addition, Excess-3, 2421, 84-2-1, Gray code, ASCII, parity.</p></a>
+<a class="tile" href="logic.html"><span class="n">PAGE 7</span><h3>Binary Logic</h3><p>AND/OR/NOT, truth tables, gates, logic signals, switching circuits, timing diagrams (P1.35, P1.36).</p></a>
+<a class="tile" href="cheatsheet.html"><span class="n">PRINT ME</span><h3>Cheat Sheet</h3><p>The whole chapter on one dense, printable page.</p></a>
+<a class="tile" href="solved.html"><span class="n">REFERENCE</span><h3>Solved Problems</h3><p>Slide examples 1–16, homework, book problems 1.1–1.36, First Exam 2017 Q1.</p></a>
+<a class="tile" href="quiz.html" style="border-color:var(--accent2)"><span class="n">THE BOSS FIGHT</span><h3>🏆 Mastery Quiz</h3><p>137 questions in six levels, from warm-up to GOAT. Score 0–100 with full solutions.</p></a>
+</div>
+
+<h2>The 10 golden rules of Chapter 1</h2>
+<div class="card"><ol>
+<li><b>Value = Σ digit × base<sup>position</sup></b>. Positions go …2, 1, 0 . −1, −2…</li>
+<li>Digits of base r are <b>0 … r−1</b>. The digit "r" never appears in base r, so (128)<sub>8</sub> is invalid.</li>
+<li>Decimal → base r: <b>integer part</b> divide by r and read remainders <b>bottom-up</b>. <b>Fraction part</b> multiply by r and read integers <b>top-down</b>.</li>
+<li>2 ↔ 8: group <b>3</b> bits. 2 ↔ 16: group <b>4</b> bits. Group <b>outward from the point</b> and pad with zeros at the far ends.</li>
+<li>8 ↔ 16: go through binary. In general, if b = a<sup>k</sup>, group k digits (3 ↔ 9 groups 2, 4 ↔ 16 groups 2, 2 ↔ 32 groups 5).</li>
+<li><b>1's complement</b> = flip every bit. <b>2's complement</b> = 1's + 1, or keep bits up to and including the first 1 from the right and flip the rest.</li>
+<li>n-bit 2's complement range: <b>−2<sup>n−1</sup> … +2<sup>n−1</sup>−1</b>. Signed-magnitude and 1's complement: <b>−(2<sup>n−1</sup>−1) … +(2<sup>n−1</sup>−1)</b>, and they have two zeros.</li>
+<li>Subtraction with 2's complement: <b>add</b> and <b>discard</b> the end carry. With 1's complement: add the end carry back in (<b>end-around carry</b>). No carry means the result is negative and in complement form.</li>
+<li>BCD: each decimal digit gets 4 bits. In BCD addition, if a digit sum is <b>&gt; 9 or produces a carry, add 6 (0110)</b>.</li>
+<li>Bits needed for M items: <b>n = ⌈log<sub>2</sub> M⌉</b>. Gray code changes exactly <b>one bit</b> per step. Parity detects <b>single</b>-bit (odd count) errors.</li>
+</ol></div>
+
+<div class="card"><b>About your past papers:</b> only <b>First Exam 2017, Question 1</b> (7 MCQs) is about this chapter. The 2018 and 2023 finals cover later chapters (sequential circuits, counters, memory). They do use 5-option MCQs, so the quiz uses the same a–e format, and it borrows the "count the bits / address lines" ideas from the memory questions because those are really Chapter 1 powers-of-2 problems.</div>
+</main>
+<script src="assets/katex/katex.min.js"></script><script src="assets/math.js"></script><script src="assets/layout.js"></script></body></html>

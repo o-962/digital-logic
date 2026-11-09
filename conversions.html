@@ -1,0 +1,56 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>2 · Base Conversions</title><link rel="stylesheet" href="assets/katex/katex.min.css"><link rel="stylesheet" href="assets/style.css"></head><body>
+<main>
+<p class="pill">Slides 21–39 · Examples 6–16 · Book 1.7–1.13</p>
+<h1>2 · Base Conversions</h1>
+<p class="lead">Every conversion uses one of four moves: <b>evaluate</b> (any → decimal), <b>divide</b> (decimal integer → r), <b>multiply</b> (decimal fraction → r), or <b>group</b> (between bases that are powers of each other).</p>
+
+<div class="formula" data-tex="\begin{array}{ccccc}\text{Octal}&amp;\xleftrightarrow{\ \text{group 3}\ }&amp;\text{Binary}&amp;\xleftrightarrow{\ \text{group 4}\ }&amp;\text{Hex}\\[4pt]{\scriptstyle\div 8,\ \times 8}\;\searrow&amp;&amp;\Big\updownarrow{\scriptstyle\ \div 2,\ \times 2}&amp;&amp;\swarrow\;{\scriptstyle\div 16,\ \times 16}\\[4pt]&amp;&amp;\text{Decimal}&amp;&amp;\end{array}\qquad\begin{array}{l}\text{From decimal: divide or multiply by the base.}\\\text{To decimal: evaluate the digit weights.}\end{array}"></div>
+
+<h2>A. Any base → decimal (evaluate)</h2>
+<div class="rule">Multiply each digit by its weight r<sup>position</sup> and add.</div>
+<p>(10110.0101)<sub>2</sub> = 16+4+2 + ¼+1/16 = <b>22.3125</b> · (16.5)<sub>16</sub> = 16+6+5/16 = <b>22.3125</b> · (26.24)<sub>8</sub> = 16+6+2/8+4/64 = <b>22.3125</b> (Book 1.9: all three are equal.)</p>
+<div class="tip">Horner's method for integers is faster: (4310)<sub>5</sub> → ((4·5+3)·5+1)·5+0 = 580.</div>
+
+<h2>B. Decimal integer → base r (repeated division)</h2>
+<div class="rule">Divide by r. The <b>remainder</b> is the next digit. Keep dividing the quotient until it reaches 0. The <b>first</b> remainder is the <b>LSB</b>, so read <b>bottom → top</b>.</div>
+<div class="two"><div><b>(13)<sub>10</sub> → base 2</b><table><tr><th>÷2</th><th>Q</th><th>R</th></tr><tr><td>13</td><td>6</td><td>1 (a<sub>0</sub> LSB)</td></tr><tr><td>6</td><td>3</td><td>0</td></tr><tr><td>3</td><td>1</td><td>1</td></tr><tr><td>1</td><td>0</td><td>1 (MSB)</td></tr></table>= <b>(1101)<sub>2</sub></b></div>
+<div><b>(175)<sub>10</sub> → base 8</b><table><tr><th>÷8</th><th>Q</th><th>R</th></tr><tr><td>175</td><td>21</td><td>7</td></tr><tr><td>21</td><td>2</td><td>5</td></tr><tr><td>2</td><td>0</td><td>2</td></tr></table>= <b>(257)<sub>8</sub></b></div></div>
+
+<h2>C. Decimal fraction → base r (repeated multiplication)</h2>
+<div class="rule">Multiply the fraction by r. The <b>integer part</b> is the next digit. Repeat with the remaining fraction until it is 0 (or you have enough digits). The <b>first</b> integer is the <b>MSB</b> right after the point, so read <b>top → bottom</b>.</div>
+<div class="two"><div><b>(0.125)<sub>10</sub> → base 2</b><table><tr><th>×2</th><th>=</th><th>digit</th></tr><tr><td>0.125</td><td>0.25</td><td>0</td></tr><tr><td>0.25</td><td>0.5</td><td>0</td></tr><tr><td>0.5</td><td>1.0</td><td>1</td></tr></table>= <b>(0.001)<sub>2</sub></b></div>
+<div><b>(0.3125)<sub>10</sub> → base 8</b><table><tr><th>×8</th><th>=</th><th>digit</th></tr><tr><td>0.3125</td><td>2.5</td><td>2</td></tr><tr><td>0.5</td><td>4.0</td><td>4</td></tr></table>= <b>(0.24)<sub>8</sub></b></div></div>
+<div class="trap">Mixed numbers like 15.625: convert the integer and fraction parts <b>separately</b>, then join them: 15 → 17<sub>8</sub>, 0.625 → 0.5<sub>8</sub>, so (15.625)<sub>10</sub> = <b>(17.5)<sub>8</sub></b>.</div>
+<div class="trap">Many fractions never terminate. (0.6)<sub>10</sub> = (0.2121…)<sub>4</sub> and (0.1)<sub>10</sub> = (0.0001100110011…)<sub>2</sub>. A decimal fraction terminates in binary only if its reduced denominator is a power of 2. When that happens, stop at the number of places the question asks for (1/3 to 8 places = 0.01010101).</div>
+
+<h2>D. Grouping: binary ↔ octal ↔ hex</h2>
+<div class="two"><div class="rule"><b>8 = 2³</b>, so each octal digit is <b>3 bits</b>.<br>(10110.01)<sub>2</sub> → 010 110 . 010 → <b>(26.2)<sub>8</sub></b></div>
+<div class="rule"><b>16 = 2⁴</b>, so each hex digit is <b>4 bits</b>.<br>(10110.01)<sub>2</sub> → 0001 0110 . 0100 → <b>(16.4)<sub>16</sub></b></div></div>
+<div class="trap">Group <b>outward from the binary point</b>: right-to-left for the integer part, left-to-right for the fraction. Pad zeros on the <b>left</b> of the integer and the <b>right</b> of the fraction. Padding the fraction on the left changes the value: .01 → .010 = 2, but .001 = 1 is wrong.</div>
+<p><b>Octal ↔ Hex:</b> go through binary (slides p.36). (26.2)<sub>8</sub> = 010 110 . 010 = 0001 0110 . 0100 = <b>(16.4)<sub>16</sub></b></p>
+<div class="tip">General rule: if base b = a<sup>k</sup>, then <b>k digits of base a = 1 digit of base b</b>. Base 3 → 9 groups 2 trits: (212.1)<sub>3</sub> → 02 12 . 10 → (2 5 . 3)<sub>9</sub>. Base 4 → 16 groups 2. Base 2 → 32 groups 5.</div>
+
+<h3>Worked slide examples</h3>
+<div class="steps">Ex13  (7563.1102)8  = 111 101 110 011 . 001 001 000 010 = (111101110011.00100100001)2
+Ex13  (011 011 110 101 100 . 010 11)2 → 011 011 110 101 100 . 010 110 = (33654.26)8
+Ex14  (10 1110 1001 0010 . 0110 1101 1)2 → 0010 1110 1001 0010 . 0110 1101 1000 = (2E92.6D8)16
+Ex14  (F13.67)16 = (1111 0001 0011 . 0110 0111)2
+Ex15  (6503.21)8 = 110 101 000 011 . 010 001 = 1101 0100 0011 . 0100 0100 = (D43.44)16
+Ex16  (212.1)3 = (25.3)9</div>
+
+<h2>E. Which route is faster? (Book 1.8 / HW 1-10)</h2>
+<p>Decimal → hex (fewer divisions) → binary (just expand each digit) is usually faster than dividing by 2 many times. 431 = 1AF<sub>16</sub> = 1 1010 1111<sub>2</sub>, and 345 = 159<sub>16</sub> = 1 0101 1001<sub>2</sub>.</p>
+
+<h2 id="conv">🔧 Interactive converter with steps</h2>
+<div class="card noprint">
+<p>Type any number (with an optional fraction). It shows the exact division and multiplication tables, so you can check your own work.</p>
+<input id="cv-in" type="text" value="15.625" size="18"> from base <select id="cv-a"></select> to base <select id="cv-b"></select>
+<div id="cv-out" style="margin-top:12px"></div>
+</div>
+<script>
+(function(){var a=document.getElementById("cv-a"),b=document.getElementById("cv-b");for(var i=2;i<=36;i++){a.add(new Option(i,i));b.add(new Option(i,i));}a.value=10;b.value=8;})();
+</script>
+</main>
+<script src="assets/converter.js"></script>
+<script src="assets/katex/katex.min.js"></script><script src="assets/math.js"></script><script src="assets/layout.js"></script></body></html>

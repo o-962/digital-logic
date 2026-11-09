@@ -1,0 +1,70 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>3 · Arithmetic</title><link rel="stylesheet" href="assets/katex/katex.min.css"><link rel="stylesheet" href="assets/style.css"></head><body>
+<main>
+<p class="pill">Slides 16–19 · Book 1.11, 1.12</p>
+<h1>3 · Arithmetic in Base r</h1>
+<p class="lead">It's the same column arithmetic you learned in school. The only change is that you carry or borrow <b>the base</b> instead of 10.</p>
+
+<h2>Addition</h2>
+<div class="rule">If a column sum is <b>≥ base</b>, subtract the base, write what's left, and carry 1.</div>
+<div class="two"><div><b>Binary rules</b><table><tr><th>a+b</th><th>sum</th><th>carry</th></tr><tr><td>0+0</td><td>0</td><td>0</td></tr><tr><td>0+1</td><td>1</td><td>0</td></tr><tr><td>1+1</td><td>0</td><td>1</td></tr><tr><td>1+1+1</td><td>1</td><td>1</td></tr></table></div>
+<div class="steps">  carries 1 1 1 1 1 1
+            1 1 1 1 0 1   = 61
+        +     1 0 1 1 1   = 23
+        ─────────────────
+          1 0 1 0 1 0 0   = 84</div></div>
+<div class="steps">Hex:   2E + 34:   E+4 = 18 ≥ 16 → 18−16 = 2, carry 1;  2+3+1 = 6   → (62)16
+Hex:   F9 + A7:   9+7 = 16 → 0 c1;  F+A+1 = 26 → 26−16 = 10 = A c1  → (1A0)16
+Octal: 457 + 365: 7+5 = 12 → 4 c1;  5+6+1 = 12 → 4 c1;  4+3+1 = 8 → 0 c1  → (1044)8</div>
+
+<h2>Subtraction (borrow a base)</h2>
+<div class="rule">If the top digit is too small, borrow 1 from the next column. That adds <b>r</b> to the current column (in binary, a borrowed 1 is worth 2 = (10)<sub>2</sub>).</div>
+<div class="steps">     1 0 0 1 1 0 1   = 77
+   −     1 0 1 1 1   = 23
+   ─────────────────
+     0 1 1 0 1 1 0   = 54</div>
+<div class="tip">Borrowing across a run of zeros: 1000 − 1 = 0111. Every 0 in the run becomes r−1 (a 1 in binary, a 7 in octal, an F in hex).</div>
+
+<h2>Multiplication (bit by bit)</h2>
+<div class="rule">In binary, each partial product is either 0 or a shifted copy of the multiplicand. Add up the partial products.</div>
+<div class="steps">        1 0 1 1 1     (23)
+      ×   1 0 1 0     (10)
+      ───────────
+        0 0 0 0 0
+      1 0 1 1 1
+    0 0 0 0 0
+  1 0 1 1 1
+  ───────────────
+  1 1 1 0 0 1 1 0     (230)</div>
+<p><b>Book 1.12:</b> 1011 + 101 = <b>10000</b> and 1011 × 101 = <b>110111</b> (11 × 5 = 55). In hex, 2E + 34 = <b>62</b> and 2E × 34 = <b>958</b> (46 × 52 = 2392).</p>
+<div class="steps">Hex multiply 2E × 34:
+   2E × 4 :  E×4 = 56 = 3·16+8 → 8 c3 ;  2×4+3 = 11 = B   → B8
+   2E × 3 :  E×3 = 42 = 2·16+10 → A c2 ;  2×3+2 = 8        → 8A  (shift one place)
+      B8
+   + 8A0
+   ─────
+     958</div>
+
+<h2>Division (long division with shift and subtract)</h2>
+<div class="steps">Book 1.11:  111011 ÷ 101      (59 ÷ 5)
+
+          1 0 1 1      ← quotient
+        ─────────
+  101 ) 1 1 1 0 1 1
+        1 0 1          111 ≥ 101 → q=1, 111−101 = 10
+        ─────
+          1 0 0        bring down 0 → 100 &lt; 101 → q=0
+          1 0 0 1      bring down 1 → 1001 ≥ 101 → q=1
+            1 0 1      1001−101 = 100
+          ───────
+            1 0 0 1    bring down 1 → 1001 → q=1
+              1 0 1    1001−101 = 100
+            ───────
+              1 0 0    ← remainder</div>
+<p><b>Quotient = 1011 (11), remainder = 100 (4).</b> Check: 5 × 11 + 4 = 59 ✓</p>
+
+<h2>Arithmetic in any base r</h2>
+<div class="tip">If the column arithmetic gets confusing, multiply in decimal and convert each column result: digit = result mod r, carry = result div r. (34)<sub>5</sub> × (23)<sub>5</sub> = 19 × 13 = 247 = <b>(1442)<sub>5</sub></b>.</div>
+<div class="trap">Don't just "add the digits". In base 8, 7+1 = 10, and in hex, F+1 = 10. Most exam mistakes in this section are carrying 10 instead of r.</div>
+</main>
+<script src="assets/katex/katex.min.js"></script><script src="assets/math.js"></script><script src="assets/layout.js"></script></body></html>

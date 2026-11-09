@@ -1,0 +1,81 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>1 · Number Systems</title><link rel="stylesheet" href="assets/katex/katex.min.css"><link rel="stylesheet" href="assets/style.css"></head><body>
+<main>
+<p class="pill">Slides 2–15 · Book 1.1–1.6</p>
+<h1>1 · Number Systems</h1>
+<p class="lead">Digital systems work with <b>discrete</b> data such as letters and digits, not continuous (analog) signals. Binary uses only 0 and 1 because two states are easy to build with electronic circuits.</p>
+
+<h2>Base (radix) and positional notation</h2>
+<div class="formula" data-tex="\begin{gathered}\Bigl(\,\underbrace{d_{N-1}\,d_{N-2}\ldots d_{1}\,d_{0}}_{\text{integer part}}\;\underset{\text{point}}{\textcolor{#f6ad55}{\boldsymbol{.}}}\;\underbrace{d_{-1}\,d_{-2}\ldots d_{-M}}_{\text{fraction part}}\,\Bigr)_{r}\\[6pt]\text{digit } d_{i}\in\{0,1,\ldots,r-1\}\qquad\text{weight of position } i=r^{i}\end{gathered}"></div>
+<div class="formula" data-tex="\begin{aligned}\text{Decimal value}&amp;=\sum_{i=-M}^{N-1} d_{i}\times r^{i}\\&amp;=d_{N-1}r^{N-1}+\cdots+d_{1}r+d_{0}+d_{-1}r^{-1}+\cdots+d_{-M}r^{-M}\end{aligned}"></div>
+<div class="rule">Position 0 is the digit just <b>left</b> of the point. Positions to the right of the point are negative: −1, −2, …</div>
+<p>Example from the slides: (123.2)<sub>5</sub> = 1·25 + 2·5 + 3·1 + 2·(1/5) = 25 + 10 + 3 + 0.4 = <b>(38.4)<sub>10</sub></b></p>
+
+<h2>The four main systems</h2>
+<div class="tw"><table>
+<tr><th>System</th><th>Base</th><th>Digits</th><th>Weights … 2 1 0 . −1 −2</th><th>Slide example</th></tr>
+<tr><td>Decimal</td><td>10</td><td>0–9</td><td>100 10 1 . 0.1 0.01</td><td>(512.74)<sub>10</sub></td></tr>
+<tr><td>Binary</td><td>2</td><td>0, 1 ("bits")</td><td>4 2 1 . ½ ¼</td><td>(101.01)<sub>2</sub> = 5.25</td></tr>
+<tr><td>Octal</td><td>8</td><td>0–7</td><td>64 8 1 . 1/8 1/64</td><td>(512.74)<sub>8</sub> = 330.9375</td></tr>
+<tr><td>Hexadecimal</td><td>16</td><td>0–9, A=10 … F=15</td><td>256 16 1 . 1/16 1/256</td><td>(1E5.7A)<sub>16</sub> = 485.4765625</td></tr>
+</table></div>
+<ul>
+<li><b>Nibble</b> = 4 bits (e.g. 1011). <b>Byte</b> = 8 bits (e.g. 11000101).</li>
+<li><b>MSB</b> = most significant bit (leftmost). <b>LSB</b> = least significant bit (rightmost).</li>
+<li>Bases above 16 keep going with letters: G=16, H=17, I=18, J=19, K=20, … (slide Example 5 uses base 21).</li>
+</ul>
+<div class="trap">A number is <b>invalid</b> if any digit is ≥ the base. (19)<sub>8</sub>, (102)<sub>2</sub> and (G1)<sub>16</sub> don't exist. In 2017 Exam Q2, option (e) tries to make you think one of the numbers is invalid, but they were all valid.</div>
+
+<h2>Powers of 2 (memorize them)</h2>
+<div class="two"><div class="tw"><table>
+<tr><th>n</th><th>2<sup>n</sup></th><th>n</th><th>2<sup>n</sup></th></tr>
+<tr><td>0</td><td>1</td><td>8</td><td>256</td></tr><tr><td>1</td><td>2</td><td>9</td><td>512</td></tr>
+<tr><td>2</td><td>4</td><td>10</td><td>1024 = 1K</td></tr><tr><td>3</td><td>8</td><td>11</td><td>2048</td></tr>
+<tr><td>4</td><td>16</td><td>12</td><td>4096</td></tr><tr><td>5</td><td>32</td><td>16</td><td>65536 = 64K</td></tr>
+<tr><td>6</td><td>64</td><td>20</td><td>1,048,576 = 1M</td></tr><tr><td>7</td><td>128</td><td>30</td><td>1,073,741,824 = 1G</td></tr>
+<tr><td></td><td></td><td>40</td><td>2<sup>40</sup> = 1T</td></tr>
+</table></div>
+<div>
+<div class="rule">K = 2<sup>10</sup>, M = 2<sup>20</sup>, G = 2<sup>30</sup>, T = 2<sup>40</sup> (in memory sizes).</div>
+<p><b>Book 1.2 / HW 1-2:</b> exact bytes</p>
+<ul><li>32K = 32 × 1024 = <b>32,768</b></li><li>64M = 64 × 1,048,576 = <b>67,108,864</b></li><li>6.4G = 6.4 × 1,073,741,824 = 6,871,947,673.6 ≈ <b>6,871,947,674</b></li></ul>
+<div class="tip">Split the prefix: 128K = 2<sup>7</sup>·2<sup>10</sup> = 2<sup>17</sup>, so a 128K×8 memory needs 17 address lines. That's exactly the 2018 Final Q24 trick.</div>
+</div></div>
+
+<h2>Counting table: decimal, binary, octal, hex (slide Example 4)</h2>
+<div class="tw"><table>
+<tr><th>Dec</th><th>Bin</th><th>Oct</th><th>Hex</th><th></th><th>Dec</th><th>Bin</th><th>Oct</th><th>Hex</th></tr>
+<tr><td>0</td><td>0000</td><td>0</td><td>0</td><td></td><td>9</td><td>1001</td><td>11</td><td>9</td></tr>
+<tr><td>1</td><td>0001</td><td>1</td><td>1</td><td></td><td>10</td><td>1010</td><td>12</td><td>A</td></tr>
+<tr><td>2</td><td>0010</td><td>2</td><td>2</td><td></td><td>11</td><td>1011</td><td>13</td><td>B</td></tr>
+<tr><td>3</td><td>0011</td><td>3</td><td>3</td><td></td><td>12</td><td>1100</td><td>14</td><td>C</td></tr>
+<tr><td>4</td><td>0100</td><td>4</td><td>4</td><td></td><td>13</td><td>1101</td><td>15</td><td>D</td></tr>
+<tr><td>5</td><td>0101</td><td>5</td><td>5</td><td></td><td>14</td><td>1110</td><td>16</td><td>E</td></tr>
+<tr><td>6</td><td>0110</td><td>6</td><td>6</td><td></td><td>15</td><td>1111</td><td>17</td><td>F</td></tr>
+<tr><td>7</td><td>0111</td><td>7</td><td>7</td><td></td><td>16</td><td>10000</td><td>20</td><td>10</td></tr>
+<tr><td>8</td><td>1000</td><td>10</td><td>8</td><td></td><td>17</td><td>10001</td><td>21</td><td>11</td></tr>
+</table></div>
+
+<h2>Largest value with n digits</h2>
+<div class="rule">The largest n-digit number in base r is r<sup>n</sup> − 1 (all digits equal to r−1). With 16 bits that's 1111 1111 1111 1111 = <b>65,535 = (FFFF)<sub>16</sub></b> (Book 1.4). n bits give <b>2<sup>n</sup></b> different patterns: 0 … 2<sup>n</sup>−1.</div>
+
+<h2>Finding an unknown base (slides Ex 5, Book 1.5, 1.6)</h2>
+<p>Write every number as a polynomial in r, solve the equation, then <b>check that every digit is smaller than r</b>.</p>
+<div class="card">
+<b>(BEE)<sub>r</sub> = (2699)<sub>10</sub></b> → 11r² + 14r + 14 = 2699 → 11r² + 14r − 2685 = 0 → r = <b>15</b> (the other root is negative). Check: E = 14 &lt; 15 ✓<br><br>
+<b>14/2 = 5</b> → (r+4)/2 = 5 → <b>r = 6</b><br>
+<b>54/4 = 13</b> → (5r+4)/4 = r+3 → 5r+4 = 4r+12 → <b>r = 8</b><br>
+<b>24 + 17 = 40</b> → (2r+4) + (r+7) = 4r → <b>r = 11</b> (digit 7 &lt; 11 ✓)<br><br>
+<b>x² − 11x + 22 = 0 with roots 3 and 6</b> → (x−3)(x−6) = x² − 9x + 18. So (11)<sub>r</sub> = r+1 = 9 and (22)<sub>r</sub> = 2r+2 = 18, which both give <b>r = 8</b>.
+</div>
+<div class="tip">Shortcut: (121)<sub>r</sub> = r² + 2r + 1 = (r+1)², (11)<sub>r</sub> = r + 1, (100)<sub>r</sub> = r², and (10)<sub>r</sub> = r in <b>every</b> base.</div>
+<div class="trap">After solving, check the digits. If the equation gives r = 5 but the number contains the digit 7, there is no valid base.</div>
+
+<h2>Comparing numbers in different bases (2017 Exam Q2, Q7)</h2>
+<ul>
+<li>Same digit string, bigger base → bigger value (for strings with more than one digit): (123456)<sub>7</sub> &lt; (123456)<sub>8</sub>.</li>
+<li>(1000100)<sub>2</sub> = 68, (1000003)<sub>8</sub> = 262,147, (1000002)<sub>10</sub>, (1000001)<sub>16</sub> = 16,777,217. The binary one is smallest.</li>
+<li>(61)<sub>9</sub> = 55 &lt; (71)<sub>8</sub> = 57.</li>
+</ul>
+</main>
+<script src="assets/katex/katex.min.js"></script><script src="assets/math.js"></script><script src="assets/layout.js"></script></body></html>

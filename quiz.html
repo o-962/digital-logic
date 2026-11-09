@@ -1,0 +1,34 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>🏆 Mastery Quiz · Chapter 1</title><link rel="stylesheet" href="assets/katex/katex.min.css"><link rel="stylesheet" href="assets/style.css">
+<style>
+.qhead{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.qtext{font-size:1.4rem;line-height:1.6;margin:16px 0 22px;font-weight:500}
+.opt{display:flex;gap:14px;align-items:center;background:var(--panel2);border:2px solid var(--line);border-radius:12px;padding:15px 18px;margin:12px 0;cursor:pointer;transition:.1s;font-size:1.1rem}
+.opt:hover{border-color:var(--blue)}
+.opt .k{font-family:var(--mono);font-weight:700;color:var(--accent2);min-width:24px}
+.opt.sel{border-color:var(--accent);background:#123a38}
+.opt.ok{border-color:var(--good);background:#16392a}
+.opt.no{border-color:var(--bad);background:#42201f}
+.navgrid{display:flex;flex-wrap:wrap;gap:7px;margin:20px 0}
+.navgrid button{width:46px;height:38px;border-radius:8px;border:1px solid var(--line);background:var(--panel2);color:var(--muted);cursor:pointer;font-family:var(--mono);font-size:15px}
+.navgrid button.ans{background:#1f3b57;color:#fff}
+.navgrid button.ok{background:#22543d;color:#fff}
+.navgrid button.no{background:#742a2a;color:#fff}
+.navgrid button.cur{outline:3px solid var(--accent2)}
+.sol{margin-top:24px;border-top:2px dashed var(--line);padding-top:18px}
+.verdict{font-weight:800;font-size:1.35rem}
+.bar{height:14px;background:var(--panel2);border-radius:99px;overflow:hidden}
+.bar>i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--blue))}
+.big{font-size:5rem;font-weight:700;font-family:var(--mono);line-height:1.1}
+.rank{font-size:2rem;font-weight:800;margin-top:8px}
+.modes .tile{cursor:pointer}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:10px 0}
+.rev{border-left:5px solid var(--line)} .rev.ok{border-left-color:var(--good)} .rev.no{border-left-color:var(--bad)}
+.lvtag{font-size:14px;padding:3px 12px;border-radius:99px;font-weight:700;color:#fff}
+.lv1{background:#2c5282}.lv2{background:#285e61}.lv3{background:#744210}.lv4{background:#553c9a}.lv5{background:#702459}.lv6{background:#9b2c2c}
+</style></head><body>
+<main id="app" data-nopager></main>
+<script src="assets/questions.js"></script>
+<script src="assets/quiz.js"></script>
+<script src="assets/katex/katex.min.js"></script><script src="assets/math.js"></script><script src="assets/layout.js"></script>
+</body></html>

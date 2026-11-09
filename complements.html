@@ -1,0 +1,106 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>4 · Complements</title><link rel="stylesheet" href="assets/katex/katex.min.css"><link rel="stylesheet" href="assets/style.css"></head><body>
+<main>
+<p class="pill">Slides 43–44, 52–53 · Book 1.14–1.18 · HW 1-16, 1-18</p>
+<h1>4 · Complements</h1>
+<p class="lead">Complements let a computer subtract by adding. Every base r has two of them: the <b>diminished radix (r−1)'s complement</b> and the <b>radix r's complement</b>.</p>
+
+<h2>Definitions (n-digit number N in base r)</h2>
+<div class="formula" data-tex="\begin{aligned}(r-1)\text{'s complement}&amp;=(r^{n}-1)-N&amp;&amp;\leftarrow\text{ subtract every digit from }r-1\\r\text{'s complement}&amp;=r^{n}-N=(r-1)\text{'s complement}+1&amp;&amp;\text{(and }r\text{'s complement of 0 is 0)}\end{aligned}"></div>
+<div class="tw"><table>
+<tr><th>Base</th><th>Diminished radix</th><th>How</th><th>Radix</th><th>How</th></tr>
+<tr><td>2</td><td>1's complement</td><td>flip every bit</td><td>2's complement</td><td>1's + 1</td></tr>
+<tr><td>10</td><td>9's complement</td><td>9 − each digit</td><td>10's complement</td><td>9's + 1</td></tr>
+<tr><td>8</td><td>7's complement</td><td>7 − each digit</td><td>8's complement</td><td>7's + 1</td></tr>
+<tr><td>16</td><td>15's complement</td><td>F − each digit</td><td>16's complement</td><td>15's + 1</td></tr>
+</table></div>
+
+<h2>1's complement (binary)</h2>
+<div class="rule">Every 0 becomes 1 and every 1 becomes 0. A number plus its 1's complement is always all ones: 10110000 + 01001111 = 11111111.</div>
+
+<h2>2's complement: two methods</h2>
+<div class="two">
+<div class="steps">Method 1: 1's comp + 1
+  Number  1 0 1 1 0 0 0 0
+  1's     0 1 0 0 1 1 1 1
+        +               1
+  2's     0 1 0 1 0 0 0 0</div>
+<div class="steps">Method 2 (fast): scan from the right
+  keep every bit up to and including
+  the FIRST 1, flip all bits to its left
+  1 0 1 1 | 0 0 0 0   → flip | keep
+  0 1 0 1 | 0 0 0 0</div></div>
+<div class="tip">Method 2 also works with a binary point: 1010.0110 → 0101.1010. Take the complement of the whole string as if the point weren't there.</div>
+
+<h3>Must-know special cases (HW 1-16, Book 1.14)</h3>
+<div class="tw"><table>
+<tr><th>Number</th><th>1's comp</th><th>2's comp</th><th>Why it's interesting</th></tr>
+<tr><td>11101010</td><td>00010101</td><td>00010110</td><td>normal</td></tr>
+<tr><td>01111110</td><td>10000001</td><td>10000010</td><td>normal</td></tr>
+<tr><td>00000001</td><td>11111110</td><td>11111111</td><td>2's comp of 1 is all ones (−1)</td></tr>
+<tr><td>10000000</td><td>01111111</td><td>10000000</td><td>2's comp of itself! (−128 has no positive partner)</td></tr>
+<tr><td>00000000</td><td>11111111</td><td>00000000</td><td>the carry out is discarded, so 0 stays 0</td></tr>
+<tr><td>00010000</td><td>11101111</td><td>11110000</td><td></td></tr>
+<tr><td>11011010</td><td>00100101</td><td>00100110</td><td></td></tr>
+<tr><td>10101010</td><td>01010101</td><td>01010110</td><td></td></tr>
+<tr><td>10000101</td><td>01111010</td><td>01111011</td><td></td></tr>
+<tr><td>11111111</td><td>00000000</td><td>00000001</td><td></td></tr>
+</table></div>
+
+<h3>Decimal complements (Book 1.15)</h3>
+<div class="tw"><table>
+<tr><th>Number</th><th>9's comp</th><th>10's comp</th></tr>
+<tr><td>25,478,036</td><td>74,521,963</td><td>74,521,964</td></tr>
+<tr><td>63,325,600</td><td>36,674,399</td><td>36,674,400</td></tr>
+<tr><td>25,000,000</td><td>74,999,999</td><td>75,000,000</td></tr>
+<tr><td>00,000,000</td><td>99,999,999</td><td>00,000,000</td></tr>
+</table></div>
+<div class="tip">10's complement shortcut: keep the trailing zeros, subtract the first non-zero digit from <b>10</b>, then subtract every digit to its left from <b>9</b>. 63,325,6<u>00</u> → 36,674,4<u>00</u>.</div>
+<p><b>Book 1.16:</b> 16's comp of C3DF = 10000<sub>16</sub> − C3DF = <b>3C21</b>. In binary, C3DF = 1100 0011 1101 1111 and its 2's comp is 0011 1100 0010 0001 = 3C21. Same answer, because 16's complement in hex is the same thing as 2's complement in binary.</p>
+
+<h2>Subtracting unsigned numbers M − N with complements</h2>
+<div class="rule"><b>r's complement method:</b> (1) Pad both to the same number of digits n. (2) Compute M + (r's comp of N). (3) If there is an <b>end carry</b>, M ≥ N: <b>discard</b> the carry and the result is positive. (4) If there is <b>no end carry</b>, M &lt; N: the result is negative. Take the r's complement of the sum and put a minus sign in front.</div>
+<div class="rule"><b>(r−1)'s complement method:</b> Same steps, but use the (r−1)'s complement. If there is an end carry, <b>add it back to the LSB</b> (end-around carry). If not, take the (r−1)'s complement of the sum and add a minus sign.</div>
+<div class="steps">Book 1.18 (c)  1001 − 110101   (9 − 53)
+   pad M:          001001
+   2's comp of N:  001011
+   sum:            010100   ← no end carry → negative
+   2's comp:       101100   → answer  −101100  (= −44 ✓)
+
+HW 1-18 (b)    110100 − 10101   (52 − 21)
+   pad N:          010101 → 2's comp 101011
+   110100 + 101011 = 1 011111 ← end carry → discard → +011111 = 31 ✓
+
+Book 1.17 (b)  125 − 1800 (10's comp)
+   0125 + 8200 = 8325  ← no carry → −(10's comp of 8325) = −1675 ✓</div>
+<div class="tw"><table><tr><th>Problem</th><th>Answer</th><th>Problem</th><th>Answer</th></tr>
+<tr><td>10011 − 10010</td><td>1</td><td>11011 − 11001</td><td>10</td></tr>
+<tr><td>100010 − 100110</td><td>−100</td><td>110100 − 10101</td><td>11111</td></tr>
+<tr><td>1001 − 110101</td><td>−101100</td><td>1011 − 110000</td><td>−100101</td></tr>
+<tr><td>101000 − 10101</td><td>10011</td><td>101010 − 101011</td><td>−1</td></tr>
+<tr><td>4637 − 2579</td><td>2058</td><td>125 − 1800</td><td>−1675</td></tr>
+<tr><td>2043 − 4361</td><td>−2318</td><td>1631 − 745</td><td>886</td></tr></table></div>
+
+<h2>Slides: subtraction by complement addition (4-bit)</h2>
+<div class="two">
+<div class="steps">1's complement: 5 − 1 = 5 + (−1)
+   0101
+ + 1110      (−1 in 1's comp)
+ ─────
+ 1 0011  carry=1 → end-around
+ + 1
+   0100  = +4
+
+5 − 6:  0101 + 1001 = 0 1110
+   carry=0 → result ready: 1110 = −1</div>
+<div class="steps">2's complement: 5 − 1
+   0101
+ + 1111      (−1 in 2's comp)
+ ─────
+ 1 0100  carry discarded → +4
+
+5 − 6:  0101 + 1010 = 0 1111
+   1111 = −1 (2's comp form)</div></div>
+<div class="trap">With 2's complement you always <b>ignore</b> the end carry. With 1's complement you <b>add it back</b>. Mixing these two up is the most common mistake on this topic.</div>
+</main>
+<script src="assets/katex/katex.min.js"></script><script src="assets/math.js"></script><script src="assets/layout.js"></script></body></html>

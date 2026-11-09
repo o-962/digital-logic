@@ -1,0 +1,68 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>7 · Binary Logic</title><link rel="stylesheet" href="assets/katex/katex.min.css"><link rel="stylesheet" href="assets/style.css"></head><body>
+<main>
+<p class="pill">Slides 60–63 · Book 1.35, 1.36</p>
+<h1>7 · Binary Logic &amp; Gates</h1>
+<p class="lead">Binary logic works with variables that are 0 or 1 and three basic operations: AND, OR and NOT. This is the bridge into Chapter 2 (Boolean algebra).</p>
+
+<h2>Basic operators</h2>
+<div class="two">
+<div class="tw"><table><tr><th>x</th><th>y</th><th>AND x·y</th><th>OR x+y</th><th>NAND</th><th>NOR</th><th>XOR x⊕y</th><th>XNOR</th></tr>
+<tr><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td></tr>
+<tr><td>0</td><td>1</td><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td><td>0</td></tr>
+<tr><td>1</td><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td><td>0</td></tr>
+<tr><td>1</td><td>1</td><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td></tr></table>
+<table><tr><th>x</th><th>NOT x = x' = x̄</th></tr><tr><td>0</td><td>1</td></tr><tr><td>1</td><td>0</td></tr></table></div>
+<div>
+<div class="rule"><b>AND</b> (z = x·y = xy) is 1 only if <b>all</b> inputs are 1.</div>
+<div class="rule"><b>OR</b> (z = x + y) is 1 if <b>at least one</b> input is 1.</div>
+<div class="rule"><b>NOT</b> (z = x') inverts the input.</div>
+<div class="rule"><b>NAND / NOR</b> are AND / OR followed by NOT (the bubble on the output).</div>
+<div class="rule"><b>XOR</b> is 1 when the inputs <b>differ</b> (for more inputs: when the number of 1s is odd). <b>XNOR</b> is 1 when they're <b>equal</b>.</div>
+</div></div>
+<div class="trap">"+" here is logical OR, not addition: 1 + 1 = 1 in Boolean logic, but (1+1)₂ = 10 in binary arithmetic. "·" is AND, not multiplication of numbers.</div>
+
+<h2>Gate symbols</h2>
+<div class="card" style="background:#fff;color:#000">
+<svg viewBox="0 0 760 120" width="100%" style="max-width:760px" font-family="Inter,sans-serif" font-size="14">
+<g stroke="#000" stroke-width="2" fill="none">
+<path d="M20 30 h30 a30 30 0 0 1 0 60 h-30 z"/><line x1="0" y1="45" x2="20" y2="45"/><line x1="0" y1="75" x2="20" y2="75"/><line x1="80" y1="60" x2="100" y2="60"/>
+<path d="M150 30 q20 30 0 60 q50 0 70 -30 q-20 -30 -70 -30 z"/><line x1="130" y1="45" x2="156" y2="45"/><line x1="130" y1="75" x2="156" y2="75"/><line x1="220" y1="60" x2="240" y2="60"/>
+<path d="M280 35 v50 l45 -25 z"/><circle cx="330" cy="60" r="5"/><line x1="260" y1="60" x2="280" y2="60"/><line x1="335" y1="60" x2="355" y2="60"/>
+<path d="M400 30 h30 a30 30 0 0 1 0 60 h-30 z"/><circle cx="466" cy="60" r="5"/><line x1="380" y1="45" x2="400" y2="45"/><line x1="380" y1="75" x2="400" y2="75"/><line x1="471" y1="60" x2="490" y2="60"/>
+<path d="M530 30 q20 30 0 60 q50 0 70 -30 q-20 -30 -70 -30 z"/><circle cx="605" cy="60" r="5"/><line x1="510" y1="45" x2="536" y2="45"/><line x1="510" y1="75" x2="536" y2="75"/><line x1="610" y1="60" x2="625" y2="60"/>
+<path d="M660 30 q20 30 0 60 q50 0 70 -30 q-20 -30 -70 -30 z"/><path d="M650 30 q20 30 0 60"/><line x1="640" y1="45" x2="666" y2="45"/><line x1="640" y1="75" x2="666" y2="75"/><line x1="730" y1="60" x2="750" y2="60"/>
+</g><g fill="#000"><text x="35" y="112">AND</text><text x="165" y="112">OR</text><text x="285" y="112">NOT</text><text x="410" y="112">NAND</text><text x="545" y="112">NOR</text><text x="675" y="112">XOR</text></g></svg>
+</div>
+
+<h2>Logic signals (slide 62)</h2>
+<div class="rule">Logic 1 is a <b>range</b> of high voltages and logic 0 is a <b>range</b> of low voltages. The gap between the two ranges is the <b>transition region</b>. Using ranges instead of exact voltages makes circuits <b>immune to small noise</b>.</div>
+
+<h2>Switching circuits (slide 63)</h2>
+<div class="rule"><b>Switches in series = AND</b>: the lamp lights only if both switches are closed. <b>Switches in parallel = OR</b>: the lamp lights if either switch is closed.</div>
+
+<h2>Timing diagrams (Book 1.35, 1.36)</h2>
+<p>Step through every input combination in counting order and write each output underneath. The output only changes when the inputs change, because ideal gates have no delay.</p>
+<div class="two">
+<div><b>P1.35:</b> f = (abc)' (3-input NAND), g = (a+b+c)' (3-input NOR)
+<table><tr><th>abc</th><th>000</th><th>001</th><th>010</th><th>011</th><th>100</th><th>101</th><th>110</th><th>111</th></tr>
+<tr><th>f</th><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>0</td></tr>
+<tr><th>g</th><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr></table></div>
+<div><b>P1.36:</b> f = a ⊕ b (XOR), g = (a ⊕ b)' (XNOR)
+<table><tr><th>ab</th><th>00</th><th>01</th><th>10</th><th>11</th></tr>
+<tr><th>f</th><td>0</td><td>1</td><td>1</td><td>0</td></tr>
+<tr><th>g</th><td>1</td><td>0</td><td>0</td><td>1</td></tr></table></div></div>
+<div class="card" style="background:#fff;color:#000"><b>Timing diagram, P1.36</b>
+<svg viewBox="0 0 520 190" width="100%" style="display:block;max-width:620px;margin-top:8px" font-family="KaTeX_Math,KaTeX_Main,serif" font-size="16">
+<g stroke="#ccc"><line x1="80" y1="0" x2="80" y2="190"/><line x1="190" y1="0" x2="190" y2="190"/><line x1="300" y1="0" x2="300" y2="190"/><line x1="410" y1="0" x2="410" y2="190"/></g>
+<g fill="none" stroke-width="2.5">
+<polyline stroke="#2b6cb0" points="80,40 300,40 300,15 520,15"/>
+<polyline stroke="#2b6cb0" points="80,85 190,85 190,60 300,60 300,85 410,85 410,60 520,60"/>
+<polyline stroke="#c53030" points="80,130 190,130 190,105 410,105 410,130 520,130"/>
+<polyline stroke="#2f855a" points="80,150 190,150 190,175 410,175 410,150 520,150"/>
+</g>
+<text x="10" y="35">a</text><text x="10" y="80">b</text><text x="4" y="125">f=a⊕b</text><text x="4" y="170">g=(a⊕b)'</text>
+</svg></div>
+<div class="tip">An XNOR output is always the complement of the XOR output, so g = f'. In P1.35, f is 0 only at 111 and g is 1 only at 000.</div>
+</main>
+<script src="assets/katex/katex.min.js"></script><script src="assets/math.js"></script><script src="assets/layout.js"></script></body></html>
